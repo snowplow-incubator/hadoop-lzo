@@ -61,15 +61,10 @@
   </developers>
 
   <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype OSS</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    <id>bintray-snowplow-snowplow-maven</id>
+    <name>snowplow-snowplow-maven</name>
+    <url>https://api.bintray.com/maven/snowplow/snowplow-maven/hadoop-lzo/;publish=1</url>
     </repository>
   </distributionManagement>
 

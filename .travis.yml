@@ -1,10 +1,23 @@
+dist: trusty
 language: java
 before_install:
   - sudo apt-get install -qq liblzo2-dev
 env:
+  global:
+  - secure: ZF2b692hBH1J8stmoeAcFnhRZkKxnzABLNIkdObHKLijJFMLMIaVn5mRWhmI8+lVbHIkx6BsUATdE3BPQnWI2iL5jfr2rxNfbX5NqFWV5RkN5wrKCCec4qljTpSGKApQXQT/KMFzBoxIk/c35yXjf/vN0JApztbaA/dygmpDRFo=
+  # BINTRAY_SNOWPLOW_MAVEN_USER
+  - secure: Z+qXgY0/qNksd2Z+aOQGhBmG9Gsw7sURIGc23YKWMMlGIHXAZQCZlQG+atvolkkfFHBl5hDHyuVLDxqjLAhxHZArWkFEruFOvio9kTdzLvhYGeS9pcAbEc9632XsdXqhFcKWUTREzndfxoVeVUpUGB6GfpJBk0dOLreK4xjH52w=
+  # BINTRAY_SNOWPLOW_MAVEN_API_KEY
   - C_INCLUDE_PATH=/usr/include/lzo LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
 jdk:
   - openjdk6 # works with 7 too
 script:
   - mvn test # build with hadoop 2 and test against hadoop 2
   - mvn test -P hadoop-old # build with hadoop 2 and test against hadoop 1
+deploy:
+  provider: script
+  script: "cp .travis/mvn-settings.xml $HOME/.m2/settings.xml && mvn deploy"
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: '$(.travis/is_release_tag.sh hadoop_lzo $TRAVIS_TAG && [ $? -eq 0 ] && echo "Deploying hadoop-lzo")'
